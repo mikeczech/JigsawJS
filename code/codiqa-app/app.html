@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta content='width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport' />
+        <title>
+        </title>
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
+        <style>
+            iframe, #content {
+              width: 100%;
+              height: 100%;
+              padding: 0px;
+            }
+            iframe {
+                background-color: transparent;
+                border: 0px none transparent;
+                padding: 0px;
+                overflow: hidden;
+            }
+        </style>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
+        </script>
+        <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js">
+        </script>
+    </head>
+    <body onmousedown="return false;">
+        <div data-role="page" id="page1">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    Puzzles
+                </h3>
+            </div>
+            <div id="content" data-role="content">
+              <iframe src="../puzzles/client/index.html"></iframe>
+            </div>
+        </div>
+        <script>
+            //App custom javascript
+        </script>
+    </body>
+</html>

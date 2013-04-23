@@ -1,0 +1,180 @@
+%
+%  untitled
+%
+%  Created by Mike Czech on 2012-08-06.
+%  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+%
+\documentclass[]{article}
+
+% Use utf-8 encoding for foreign characters
+\usepackage[utf8]{inputenc}
+
+% Setup for fullpage use
+\usepackage{fullpage}
+
+% Uncomment some of the following if you use the features
+%
+% Running Headers and footers
+%\usepackage{fancyhdr}
+
+% Multipart figures
+%\usepackage{subfigure}
+
+% More symbols
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\usepackage{latexsym}
+%\usepackage{enumerate}
+%\setlength{\parindent}{0pt}
+
+% Surround parts of graphics with box
+\usepackage{boxedminipage}
+
+% Package for including code in the document
+\usepackage{listings}
+
+% If you want to generate a toc for each chapter (use with book)
+\usepackage{minitoc}
+
+% This is now the recommended way for checking for PDFLaTeX:
+\usepackage{ifpdf}
+
+%\newif\ifpdf
+%\ifx\pdfoutput\undefined
+%\pdffalse % we are not running PDFLaTeX
+%\else
+%\pdfoutput=1 % we are running PDFLaTeX
+%\pdftrue
+%\fi
+\usepackage{url}
+\ifpdf
+\usepackage[pdftex]{graphicx}
+\else
+\usepackage{graphicx}
+\fi
+\title{\textsc{JigsawJS} \\ Anleitung }
+\author{ }
+
+\date{\today}
+
+\begin{document}
+
+\ifpdf
+\DeclareGraphicsExtensions{.pdf, .jpg, .tif}
+\else
+\DeclareGraphicsExtensions{.eps, .jpg}
+\fi
+
+\maketitle
+
+\section{Voraussetzungen} % (fold)
+\label{sub:voraussetzungen}
+
+\begin{itemize}
+  \item NodeJS (\url{http://nodejs.org/})
+  \item z.B. XAMPP (\url{www.apachefriends.org/de/xampp.html})
+\end{itemize}
+
+Beschreibungen zur Installation sind auf den jeweiligen Internetpräsenzen
+der Projekte vorhanden.
+
+\section{Einrichtung} % (fold)
+\label{sub:installation}
+
+\begin{enumerate}
+  \item Verschiebe die Projektdateien in ein Verzeichis, welches vom Webserver (XAMPP) öffentlich gemacht wird. Unter
+  MacOSX ist dies z.B. /Users/\$USERNAME/Sites. 
+  \item Starte nun ein Terminal und wechsel in das entpackte Verzeichnis.
+  \item Navigiere zum Unterordner puzzles/client und öffne die Datei \emph{config.js} mit einem beliebigen Texteditor. Folgende Änderungen müssen durchgeführt werden:
+  
+  \begin{itemize}
+    \item brokerAddress: Hier muss die lokale IP im Netzwerk mit Port 5050 angegeben werden.
+    \item loginAddress: IP des Rechners auf dem die Login-Einheit laufen wird, Port 3000.
+  \end{itemize}
+  
+  \item Öffne in dem aktuellen Verzeichnis die Datei index.html mit einem beliebigen Texteditor und ändere die IP der folgenden Zeile in
+  deine lokale IP (mit Port 5050) um.
+  \begin{verbatim}
+    <script src="http://192.168.178.71:5050/socket.io/socket.io.js" 
+    type="text/javascript" charset="utf-8"></script>
+  \end{verbatim}
+  
+  \item Wechsel nun \textbf{relativ zum entpackten Verzeichnis} in den Ordner puzzles/server.
+  \item Öffne die Datei \emph{config.js} und führe folgende Änderungen durch:
+  
+  \begin{itemize}
+    \item mcastAddress, mcastPort: Adresse des Rechners auf dem die Multicast-Einheit gestartet wird.
+    \item loginAddress, loginPort: Adresse des Rechners auf die die Login-Einheit gestartet wird.
+    \item isLeader: True, falls der Broker Leader werden soll (siehe Ausarbeitung)
+  \end{itemize}
+  
+  \item \textbf{Die folgenden Punkte müssen nur abgearbeitet werden, falls der aktuelle Rechner auch die Login-Einheit bzw.
+    die Multicast-Einheit verwalten soll.}
+  
+  \item Öffne die Datei \emph{login.js} und passe den Pfad (Zeile 28) entsprechend zu dem entpackten Archiv an.
+  
+  \begin{verbatim}
+    res.redirect("http://" + best + "/~mike/jigsawjs/code/codiqa-app/app.html");
+  \end{verbatim}
+  
+  (Wenn das Archiv z.B. direkt in /Users/\$USERNAME/Sites entpackt wurde, muss nur 'mike' mit dem aktuellen
+  Benutzernamen ausgetauscht werden)
+  
+  \item Weiterhin müssen in das Feld \emph{nodes} alle Rechner-IPs eingetragen werden, die einen aktiven Broker verwalten.
+  Dies kann dann z.B. so aussehen:
+  \begin{verbatim}
+    var nodes = ['131.234.78.75', '192.168.123.12'];
+  \end{verbatim}
+  
+\end{enumerate}
+
+\section{Starten der Login-Einheit} % (fold)
+\label{sec:starten_eines_brokers}
+
+\begin{itemize}
+  \item Wechsel, ausgehend vom Projektverzeichnis, nach puzzles/server
+  \item Führe \emph{node login.js} im Terminal aus
+\end{itemize}
+
+% section starten_eines_brokers (end)
+
+\section{Starten der Multicast-Einheit} % (fold)
+\label{sec:starten_der_multicast_einheit}
+
+\begin{itemize}
+  \item Wechsel, ausgehend vom Projektverzeichnis, nach puzzles/server
+  \item Führe \emph{node multicast.js} im Terminal aus
+\end{itemize}
+
+% section starten_der_multicast_einheit (end)
+
+\section{Starten eines Brokers} % (fold)
+\label{sec:starten_eines_brokers}
+
+\begin{itemize}
+  \item Starte den XAMPP Webserver
+  \item Wechsel, ausgehend vom Projektverzeichnis, nach puzzles/server
+  \item Führe \emph{node server.js} im Terminal aus
+\end{itemize}
+
+Um zu testen, ob die Einrichtung einwandfrei geklappt hat, kann in einem beliebigen Browser des Netzwerks
+die Adresse der Login-Einheit mit Port 3000 aufgerufen werden. Diese führt dann bei Erfolg eine Weiterleitung zu
+einem Broker durch, der den Client bereitstellt. Ich empfehle für einen ersten Testdurchlauf nur einen Broker zu verwenden. 
+Zum Beispiel kann der Aufruf im Browser wie folgt aussehen:
+
+\begin{verbatim}
+  http://127.0.0.1:3000
+\end{verbatim}
+
+% section starten_eines_brokers (end)
+
+% subsection installation (end)
+
+% subsection subsection_name (end)
+
+% subsection voraussetzungen (end)
+% subsubsection vor (end)
+
+% section installation (end)
+
+\end{document}
