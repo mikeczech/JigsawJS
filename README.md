@@ -1,5 +1,5 @@
 JigsawJS
-=============================
+============
 
 A collaborative jigsaw puzzle game written in Javascript/HTML5 using NodeJS. The following features are implemented at this time:
 
