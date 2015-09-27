@@ -1,6 +1,8 @@
 JigsawJS
 ============
 
+<b>INACTIVE</b>
+
 A collaborative jigsaw puzzle game that is written in Javascript, HTML5, and NodeJS. The following features are implemented at this time:
 
 - Create jigsaw puzzle games easily from a custom image or photo (tiles are created randomly!),
